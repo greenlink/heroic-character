@@ -3,16 +3,23 @@ using Greenlink.HeroicCharacter.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var openAiApiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
+
+if (string.IsNullOrWhiteSpace(openAiApiKey))
+{
+    throw new Exception("OPENAI_API_KEY environment variable is not set.");
+}
+
 builder.Services.AddScoped<ISpeciesRepository, SpeciesRepository>();
 builder.Services.AddScoped<IClassRepository, ClassRepository>();
 builder.Services.AddScoped<IGenderRepository, GenderRepository>();
 builder.Services.AddScoped<IOpenAiCharacterService, OpenAiCharacterService>();
 builder.Services.AddControllers();
-//Add OpenAPI 
+ 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi("Heroic Character API");
 
-// Configure CORS
+
 const string corsPolicyName = "AllowAngular";
 
 builder.Services.AddCors(options =>
@@ -20,7 +27,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: corsPolicyName,
         policy  =>
         {
-            policy.WithOrigins("http://localhost:4200") // Angular dev server
+            policy.WithOrigins("http://localhost:4200")
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });
@@ -28,16 +35,13 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Use CORS
 app.UseCors(corsPolicyName);
 
-// Enable OpenAPI docs in Development
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi(); //Use OpenApi
+    app.MapOpenApi();
 }
 
-// Map controllers
 app.MapControllers();
 
 app.Run();
