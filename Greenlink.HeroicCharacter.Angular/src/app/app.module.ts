@@ -7,14 +7,15 @@ import { CharacterGeneratorComponent } from './components/character-generator/ch
 
 @NgModule({
     declarations: [
-        AppComponent
+
     ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        FormsModule,
-        CharacterGeneratorComponent
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    CharacterGeneratorComponent,
+    AppComponent
+  ],
     providers: [],
     bootstrap: []
 })

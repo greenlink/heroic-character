@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
 # Copy csproj and restore
-COPY *.csproj ./Greenlink.HeroicCharacter.Api/
+COPY Greenlink.HeroicCharacter.Api/*.csproj ./Greenlink.HeroicCharacter.Api/
 RUN dotnet restore Greenlink.HeroicCharacter.Api/Greenlink.HeroicCharacter.Api.csproj
 
 # Copy everything and build
