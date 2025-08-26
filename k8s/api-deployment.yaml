@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: heroiccharacter-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: heroiccharacter-api
+  template:
+    metadata:
+      labels:
+        app: heroiccharacter-api
+    spec:
+      containers:
+        - name: api
+          image: heroiccharacter_api:latest
+          ports:
+            - containerPort: 5030
+          env:
+            - name: ASPNETCORE_URLS
+              value: "http://+:5030"
+            - name: OpenAI__ApiKey
+              valueFrom:
+                secretKeyRef:
+                  name: openai-secret
+                  key: api-key
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: heroiccharacter-api-service
+spec:
+  selector:
+    app: heroiccharacter-api
+  ports:
+    - protocol: TCP
+      port: 5030
+      targetPort: 5030
