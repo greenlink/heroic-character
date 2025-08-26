@@ -38,7 +38,7 @@ public class OpenAiCharacterService : IOpenAiCharacterService
                 new UserChatMessage(userPrompt)
             });
 
-            var description = chatResponse.Value.ToString()?.Trim();
+            var description = chatResponse.Value.Content[0].Text.Trim();
 
             // Step 2 - Prompt engineer (GPT-4.1) → DALL-E 3 prompt
             var promptEngineerResponse = await chat.CompleteChatAsync(new List<ChatMessage>
@@ -49,7 +49,7 @@ public class OpenAiCharacterService : IOpenAiCharacterService
                 }
             );
 
-            var dallEPrompt = promptEngineerResponse.Value.ToString()?.Trim();
+            var dallEPrompt = promptEngineerResponse.Value.Content[0].Text.Trim();
 
             // Step 3 - Generate image (DALL-E 3)
             var imageClient = _client.GetImageClient("dall-e-3");
@@ -63,7 +63,7 @@ public class OpenAiCharacterService : IOpenAiCharacterService
             // Step 4 - Return result
             return new CharacterResult
             {
-                Description = description ?? string.Empty,
+                Description = description,
                 ImageUrl = imageUrl
             };
     }
