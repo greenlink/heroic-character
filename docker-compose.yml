@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Greenlink.HeroicCharacter.Api/Dockerfile
-    container_name: heroiccharacter_api
+    container_name: heroic-character_api
     ports:
       - "5030:5030"
     environment:
@@ -16,9 +16,9 @@ services:
     build:
       context: .
       dockerfile: Greenlink.HeroicCharacter.Angular/Dockerfile
-    container_name: heroiccharacter_frontend
+    container_name: heroic-character_frontend
     ports:
-      - "8080:80"
+      - "4200:80"
     depends_on:
       - api
     networks:
