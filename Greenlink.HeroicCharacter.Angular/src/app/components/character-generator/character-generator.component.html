@@ -1,0 +1,41 @@
+﻿<div class="mb-3">
+  <label for="species">Species</label>
+  <select [(ngModel)]="selectedSpecies" class="form-select" id="species">
+    <option value="" disabled selected>Select a species</option>
+    @for (s of speciesOptions; track s){
+      <option [value]="s">{{ s }}</option>
+    }
+  </select>
+</div>
+
+<div class="mb-3">
+  <label for="class">Class</label>
+  <select [(ngModel)]="selectedClass" class="form-select" id="class">
+    <option value="" disabled selected>Select a class</option>
+    @for (c of classOptions; track c){
+      <option [value]="c">{{ c }}</option>
+    }
+  </select>
+</div>
+
+<div class="mb-3">
+  <label for="gender">Gender</label>
+  <select [(ngModel)]="selectedGender" class="form-select" id="gender">
+    <option value="" disabled selected>Select a gender</option>
+    @for (g of genderOptions; track g){
+      <option [value]="g">{{ g }}</option>
+    }
+  </select>
+</div>
+
+<button (click)="generateCharacter()" class="btn btn-primary">Generate Character</button>
+
+@if (result){
+  <div class="card mt-4 p-3">
+    <h5>Generated Character</h5>
+    <p>{{ result.description }}</p>
+    @if (result.imageUrl){
+      <img ngSrc="{{result.imageUrl}}" class="img-fluid" alt="character image" fill/>
+    }
+  </div>
+}
