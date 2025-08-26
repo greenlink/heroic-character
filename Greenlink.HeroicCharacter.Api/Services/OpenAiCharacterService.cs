@@ -28,8 +28,9 @@ public class OpenAiCharacterService : IOpenAiCharacterService
 
             const string systemPrompt = "You are a Dungeon Master for the D&D 2024 Ruleset.";
             var userPrompt = $"""
-                              Generate a single paragraph character description for a {request.Gender} {request.Species} {request.ClassName}.
-                              The description must include exactly 3 physical characteristics and 3 mental characteristics.
+                              Describe a character, this character must be from the {request.Gender} gender,
+                              and from the {request.Species} species and from the {request.ClassName} class.
+                              The description must be only one paragraph long.
                               """;
 
             var chatResponse = await chat.CompleteChatAsync(new List<ChatMessage>
@@ -45,7 +46,7 @@ public class OpenAiCharacterService : IOpenAiCharacterService
                 {
                     new SystemChatMessage("You are an expert prompt engineer for DALL-E 3."),
                     new UserChatMessage(
-                        $"Create a concise DALL-E 3 prompt to visually represent this character: {description}")
+                        $"Create a concise DALL-E 3 prompt having in mind RPG fantasy full body art to visually represent this character: {description}")
                 }
             );
 

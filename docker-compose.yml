@@ -8,7 +8,7 @@ services:
       - "5030:5030"
     environment:
       - ASPNETCORE_URLS=http://+:5030
-      - OpenAI__ApiKey=${OPENAI_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
     networks:
       - heroic_net
 
