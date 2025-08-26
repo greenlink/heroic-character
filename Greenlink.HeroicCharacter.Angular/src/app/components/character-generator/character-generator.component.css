@@ -3,3 +3,38 @@
   background-color: #fff;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
+
+.alert-info {
+  font-style: italic;
+  text-align: center;
+}
+
+.loading {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.spinner {
+  margin: 16px auto 0 auto;
+  width: 50px;
+  height: 50px;
+  border: 6px solid #ccc;
+  border-top-color: #007bff; /* Bootstrap primary color */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error {
+  margin-top: 20px;
+  padding: 12px;
+  background-color: #f8d7da; /* light red background */
+  color: #721c24;           /* dark red text */
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  text-align: center;
+}

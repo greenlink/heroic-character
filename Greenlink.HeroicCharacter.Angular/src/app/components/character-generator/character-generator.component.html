@@ -28,9 +28,23 @@
   </select>
 </div>
 
-<button (click)="generateCharacter()" class="btn btn-primary">Generate Character</button>
+<button (click)="generateCharacter()" [disabled]="isLoading" class="btn btn-primary">
+  {{ isLoading ? 'Generating...' : 'Generate Character' }}
+</button>
 
-@if (result){
+@if (isLoading){
+  <!-- 👇 show loading div -->
+  <div class="loading">
+    <div class="alert alert-info mt-3">Generating your hero... please wait!</div>
+    <div class="spinner"></div>
+  </div>
+}
+
+@if (errorMessage && !isLoading){
+  <div class="error">{{ errorMessage }}</div>
+}
+
+@if (result && !isLoading){
   <div class="card mt-4 p-3">
     <h5>Generated Character</h5>
     <p>{{ result.description }}</p>
@@ -39,3 +53,4 @@
     }
   </div>
 }
+

@@ -24,6 +24,9 @@ export class CharacterGeneratorComponent implements OnInit {
   selectedClass: string = '';
   selectedGender: string = '';
 
+  isLoading = false;
+  errorMessage: string | null = null;
+
   result: CharacterResult | null = null;
 
   constructor(
@@ -38,6 +41,9 @@ export class CharacterGeneratorComponent implements OnInit {
   }
 
   generateCharacter(): void {
+    this.isLoading = true; // 👈 start loading
+    this.result = null;
+
     const request: CharacterRequest = {
       species: this.selectedSpecies,
       className: this.selectedClass,
@@ -45,6 +51,16 @@ export class CharacterGeneratorComponent implements OnInit {
     };
 
     this.characterService.generateCharacter(request)
-      .subscribe(res => this.result = res);
+      .subscribe({
+        next: (result: CharacterResult) => {
+          this.result = result;
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.error('Error generating character:', err);
+          this.errorMessage = err.toString();
+          this.isLoading = false;
+        },
+      });
   }
 }
