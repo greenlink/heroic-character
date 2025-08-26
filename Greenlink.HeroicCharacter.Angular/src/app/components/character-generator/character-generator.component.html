@@ -40,8 +40,9 @@
   </div>
 }
 
-@if (errorMessage && !isLoading){
-  <div class="error">{{ errorMessage }}</div>
+@if (error && !isLoading){
+  <div class="error">{{ error.status +": "+ error.message }}</div>
+  <div class="error">{{ error.detailedMessage }}</div>
 }
 
 @if (result && !isLoading){

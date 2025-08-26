@@ -5,6 +5,7 @@ import { CharacterRequest } from '../../models/character-request';
 import { CharacterResult } from '../../models/character-result';
 import {FormsModule} from '@angular/forms';
 import {NgOptimizedImage} from '@angular/common';
+import {CharacterError} from '../../models/character-error';
 
 @Component({
   selector: 'app-character-generator',
@@ -24,8 +25,8 @@ export class CharacterGeneratorComponent implements OnInit {
   selectedClass: string = '';
   selectedGender: string = '';
 
-  isLoading = false;
-  errorMessage: string | null = null;
+  isLoading = false
+  error: CharacterError | null = null;
 
   result: CharacterResult | null = null;
 
@@ -58,7 +59,11 @@ export class CharacterGeneratorComponent implements OnInit {
         },
         error: (err) => {
           console.error('Error generating character:', err);
-          this.errorMessage = err.toString();
+          this.error = {
+            status: err.error?.status || 'Error',
+            message: err.error?.message || 'Unknown error',
+            detailedMessage: err.error?.detailedMessage || ''
+          };
           this.isLoading = false;
         },
       });

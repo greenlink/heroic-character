@@ -1,14 +1,10 @@
+using Greenlink.HeroicCharacter.Api;
 using Greenlink.HeroicCharacter.Api.Data;
 using Greenlink.HeroicCharacter.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var openAiApiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
-
-if (string.IsNullOrWhiteSpace(openAiApiKey))
-{
-    throw new Exception("OPENAI_API_KEY environment variable is not set.");
-}
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 builder.Services.AddScoped<ISpeciesRepository, SpeciesRepository>();
 builder.Services.AddScoped<IClassRepository, ClassRepository>();
@@ -18,7 +14,6 @@ builder.Services.AddControllers();
  
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi("Heroic Character API");
-
 
 const string corsPolicyName = "AllowAngular";
 
@@ -33,7 +28,16 @@ builder.Services.AddCors(options =>
         });
 });
 
+var openAiApiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY") ?? builder.Configuration.GetSection("OpenAI:ApiKey").Value;
+
+if (string.IsNullOrWhiteSpace(openAiApiKey))
+{
+    throw new Exception("OPENAI_API_KEY environment variable is not set.");
+}
+
 var app = builder.Build();
+
+app.UseExceptionHandler("/*");
 
 app.UseCors(corsPolicyName);
 
