@@ -1,4 +1,4 @@
-﻿FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+﻿FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine AS build
 WORKDIR /src
 
 COPY Greenlink.HeroicCharacter.Api/*.csproj ./Greenlink.HeroicCharacter.Api/
@@ -6,9 +6,9 @@ RUN dotnet restore Greenlink.HeroicCharacter.Api/Greenlink.HeroicCharacter.Api.c
 
 COPY . .
 WORKDIR /src/Greenlink.HeroicCharacter.Api
-RUN dotnet publish -c Release -o /app/publish
+RUN dotnet publish -c Release -o /app/publish --no-restore
 
-FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
+FROM mcr.microsoft.com/dotnet/aspnet:9.0-alpine AS final
 WORKDIR /app
 COPY --from=build /app/publish .
 EXPOSE 5030
