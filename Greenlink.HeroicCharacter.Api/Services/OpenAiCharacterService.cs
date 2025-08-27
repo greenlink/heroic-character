@@ -16,7 +16,7 @@ public class OpenAiCharacterService : IOpenAiCharacterService
 
     public OpenAiCharacterService(IConfiguration config)
     {
-        var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY") ?? config["OpenAI:ApiKey"];
+        var apiKey = config["OpenAI:ApiKey"];
         _client = new OpenAIClient(apiKey);
     }
     

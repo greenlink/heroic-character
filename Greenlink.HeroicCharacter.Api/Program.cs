@@ -28,12 +28,10 @@ builder.Services.AddCors(options =>
         });
 });
 
-var openAiApiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY") ?? builder.Configuration.GetSection("OpenAI:ApiKey").Value;
+var openAiApiKey = builder.Configuration.GetSection("OpenAI:ApiKey").Value;
 
 if (string.IsNullOrWhiteSpace(openAiApiKey))
-{
-    throw new Exception("OPENAI_API_KEY environment variable is not set.");
-}
+    throw new Exception("OpenAI__ApiKey environment variable is not set.");
 
 var app = builder.Build();
 
